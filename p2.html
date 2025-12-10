@@ -100,32 +100,20 @@
             </div>
 
             <!-- Heating Setup -->
-            <div class="equipment heating-setup" id="heatingSetup">
-              <!-- STATIC FLASK IMAGES -->
+            <!-- Heating Setup -->
+            <div class="equipmen heating-setup" id="heatingSetup">
+              <!-- Single Flask Image -->
               <img
-                id="flaskImg1"
-                src="new fold\Empty stand.png"
+                id="flaskImg"
+                src="new fold/Empty stand.png"
                 class="flask-stage"
-              />
-              <img
-                id="flaskImg2"
-                src="new fold\green stand.png"
-                class="flask-stage hidden"
-              />
-              <img
-                id="flaskImg3"
-                src="new fold\yellow liqid.png"
-                class="flask-stage hidden"
-              />
-              <img
-                id="flaskImg4"
-                src="new fold\Empty stand.png"
-                class="flask-stage hidden"
+                alt="Heating Flask"
               />
 
-              <span class="tooltip"
-                >Heating Mantle with Round Bottom Flask</span
-              >
+              <!-- Tooltip (now controllable by JS) -->
+              <span id="flaskTooltip" class="tooltip">
+                Heating Mantle with Round Bottom Flask
+              </span>
             </div>
 
             <div class="brown-item">
@@ -147,10 +135,38 @@
               >
             </div>
 
+            <!-- transition fluro  -->
+            <img
+              id="columnTransitionImg"
+              class="column-transition hidden"
+              src="new fold\fluroshine.png"
+            />
+
+            <!-- Column Chromatography -->
+            <div class="columnChromato-item">
+              <img
+                id="columnChromatoImg"
+                src="new fold\flurocolumn (2).png"
+                class="columnChromato-img"
+                alt="Column Chromatography Setup"
+              />
+              <span class="tooltip small-tooltip"
+                >Column Chromatography Setup</span
+              >
+            </div>
+            <!-- Final Transition Image -->
+            <img
+              style="width: 70px; height: auto"
+              id="dropperMoveImg"
+              src="new fold/solid fluro.png"
+              class="dropper-move hidden"
+            />
+
             <!-- Dropper -->
             <div class="equipment dropper" id="dropper">
               <img
-                src="new fold\solid fluro.png"
+                id="dropperImg"
+                src="new fold/solid fluro.png"
                 class="dropper-img"
                 alt="Dropper"
               />

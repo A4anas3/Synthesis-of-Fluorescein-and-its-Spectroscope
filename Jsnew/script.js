@@ -255,6 +255,12 @@ function updateUI() {
     nextBtn.disabled = false;
   }
 
+  if (currentStep === 11) {
+    animateDropperMove();
+  } else {
+    dropperImg.classList.remove("dropper-img-glow");
+  }
+
   // Speak the instruction
   speak(step.voice);
 }
@@ -294,7 +300,7 @@ function handleChemicalClick(chemicalId) {
         const byStart = 500; // move down (bottom)
 
         // 🔵 End: Center of white flask near scale
-        const bxEnd = 450; // move left
+        const bxEnd = 400; // move left
         const byEnd = 250; // move up
 
         magBeadObj.style.setProperty("--bx-start", `${bxStart}px`);
@@ -418,7 +424,7 @@ function handleChemicalClick(chemicalId) {
         break;
 
       case "h2so4":
-        updateConicalFlask(4);
+        // updateConicalFlask(4);
         const acidObj = document.getElementById("acidObject");
         const acidObj2 = document.getElementById("acidObject2"); // new image
 
@@ -433,7 +439,7 @@ function handleChemicalClick(chemicalId) {
         const startY = bottleRectA.top - labRect.top + 40;
 
         // Step-1 end → Up + Left (into flask)
-        const midX = startX - 250;
+        const midX = startX - 240;
         const midY = startY - 305;
 
         // Apply step-1 animation variables
@@ -451,13 +457,14 @@ function handleChemicalClick(chemicalId) {
           acidObj.style.animation = "none";
 
           // Step-2 → appear from mid position
-          const endX2 = midX + 200; // move right
-          const endY2 = midY + 60; // slightly down
+          const endX2 = midX + 150; // move right
+          const endY2 = midY + 80; // slightly down
 
           acidObj2.style.setProperty("--x2-start", `${midX}px`);
           acidObj2.style.setProperty("--y2-start", `${midY}px`);
           acidObj2.style.setProperty("--x2-end", `${endX2}px`);
           acidObj2.style.setProperty("--y2-end", `${endY2}px`);
+          updateConicalFlask(4);
 
           acidObj2.style.opacity = "1";
           acidObj2.style.animation = "acidRight 1.5s ease forwards";
@@ -466,7 +473,6 @@ function handleChemicalClick(chemicalId) {
             acidObj2.style.opacity = "0";
             acidObj2.style.animation = "none";
             acidObj2.style.transform = "none";
-            updateConicalFlask(4);
 
             addObservation("Conc. H₂SO₄ added (movable drop)");
 
@@ -487,11 +493,11 @@ function handleChemicalClick(chemicalId) {
           .getBoundingClientRect();
 
         // Start point (15px left like you wanted)
-        const wxStart = bottleRectW.left - labRectW.left - 10;
+        const wxStart = bottleRectW.left - labRectW.left + 20;
         const wyStart = bottleRectW.top - labRectW.top + 35;
 
         // End point (Up + Left)
-        const wxEnd = wxStart + 210;
+        const wxEnd = wxStart - 15;
         const wyEnd = wyStart - 200;
 
         // Apply CSS animation variables
@@ -534,7 +540,7 @@ function handleChemicalClick(chemicalId) {
         const ayStart = bottleRectAM.top - labRectAM.top + 30;
 
         // Move LEFT + Upward ( \ direction )
-        const axEnd = axStart + 110;
+        const axEnd = axStart - 80;
         const ayEnd = ayStart - 190;
 
         ammObj.style.setProperty("--ax-start", `${axStart}px`);
@@ -582,9 +588,9 @@ function handleChemicalClick(chemicalId) {
         slideImg.style.setProperty("--sr-end-y", `${startYi - 170}px`);
 
         // Diagonal ↗
-        diagImg.style.setProperty("--dg-start-x", `${startXi + 20}px`);
+        diagImg.style.setProperty("--dg-start-x", `${startXi + 200}px`);
         diagImg.style.setProperty("--dg-start-y", `${startYi}px`);
-        diagImg.style.setProperty("--dg-end-x", `${startXi + 170}px`);
+        diagImg.style.setProperty("--dg-end-x", `${startXi + 150}px`);
         diagImg.style.setProperty("--dg-end-y", `${startYi - 170}px`);
 
         // Make visible before animation
@@ -624,29 +630,55 @@ function handleChemicalClick(chemicalId) {
         break;
 
       case "columnChromo":
-        const dropper = document.getElementById("dropper");
+        resetObserveEffects(); // REMOVE all UV + glow animations
 
-        // Reset animation first
-        dropper.style.animation = "none";
-        dropper.offsetHeight; // force reflow to restart animation
-        dropper.style.animation = "";
+        const transitionImg = document.getElementById("columnTransitionImg");
+        const mainColumnImg = document.getElementById("columnChromatoImg");
 
-        // Make dropper visible & animated
-        dropper.classList.add("visible-dropper");
+        const colRect = mainColumnImg.getBoundingClientRect();
+        const clabRect = document
+          .querySelector(".lab-table")
+          .getBoundingClientRect();
 
-        addObservation(
-          "Column chromatography performed — Dark red pure solid fluorescein obtained"
-        );
+        const cstartX = colRect.left - clabRect.left - 610;
+        const cstartY = colRect.top - clabRect.top - 120;
 
-        // document.getElementById("greenYellowImg").classList.remove("glow-on");
-        // document
-        //   .querySelector(".greenYellow-item")
-        //   .classList.remove("uv-background");
-        // mainFlask.classList.remove("glowing");
+        const endX = cstartX + 110;
+        const endY = cstartY - 180;
 
-        canProceed = true;
-        nextBtn.disabled = false;
-        nextBtn.classList.add("glow-next");
+        transitionImg.style.setProperty("--cx-start-x", `${cstartX}px`);
+        transitionImg.style.setProperty("--cx-start-y", `${cstartY}px`);
+        transitionImg.style.setProperty("--cx-end-x", `${endX}px`);
+        transitionImg.style.setProperty("--cx-end-y", `${endY}px`);
+
+        transitionImg.classList.remove("hidden");
+        transitionImg.style.opacity = "1";
+        transitionImg.style.animation = "columnMoveAnim 1.2s ease-out forwards";
+
+        setTimeout(() => {
+          transitionImg.style.opacity = "0";
+          transitionImg.classList.add("hidden");
+          transitionImg.style.animation = "none";
+
+          // ⭐ INSTANT IMAGE CHANGE — NO FADE ⭐
+          mainColumnImg.style.transition = "none"; // disable fade animation
+          mainColumnImg.src = "new fold/redflurocolumn (1).png";
+
+          // force reflow so transition reset works next time
+          void mainColumnImg.offsetWidth;
+
+          // restore transition for future steps
+          mainColumnImg.style.transition = "opacity 0.8s ease";
+
+          addObservation(
+            "Column chromatography performed — Pure dark red fluorescein obtained."
+          );
+
+          canProceed = true;
+          nextBtn.disabled = false;
+          nextBtn.classList.add("glow-next");
+        }, 1200);
+
         break;
     }
   }, 500);
@@ -681,7 +713,7 @@ function handleHeat() {
   const hyStart = setupRect.top - labRect.top + 200;
 
   // 🔹 Move horizontally right
-  const hxEnd = hxStart + 300;
+  const hxEnd = hxStart + 130;
   const hyEnd = hyStart; // no vertical movement
 
   heatObj.style.setProperty("--hx-start", `${hxStart}px`);
@@ -704,7 +736,7 @@ function handleHeat() {
     canProceed = true;
     nextBtn.disabled = false;
     actionHint.classList.remove("visible");
-
+    nextBtn.classList.add("glow-next");
     showFlaskImage(1);
   }, 2000);
 }
@@ -721,6 +753,19 @@ function performObserve() {
   gyDiv.classList.add("uv-on");
 
   addObservation("Bright green fluorescence observed under UV light!");
+}
+function resetObserveEffects() {
+  const gyDiv = document.querySelector(".greenYellow-item");
+  const gyImg = document.getElementById("greenYellowImg");
+
+  // Remove ALL observation effects
+  gyImg.classList.remove("glow-on");
+  gyDiv.classList.remove("uv-on");
+
+  // If any older names used earlier:
+  gyDiv.classList.remove("uv-background");
+  gyImg.classList.remove("glow-green");
+  gyImg.classList.remove("glow-effect");
 }
 
 // Reset experiment
@@ -767,10 +812,34 @@ Object.entries(chemicals).forEach(([id, element]) => {
 
 // Hide all flask stages
 function showFlaskImage(stage) {
-  document
-    .querySelectorAll(".flask-stage")
-    .forEach((img) => img.classList.add("hidden"));
-  document.getElementById("flaskImg" + stage).classList.remove("hidden");
+  const flaskImg = document.getElementById("flaskImg");
+  const flaskTooltip = document.getElementById("flaskTooltip");
+
+  switch (stage) {
+    case 1:
+      flaskImg.src = "new fold/Empty stand.png";
+      flaskTooltip.textContent = "Empty Flask on Heating Mantle";
+      break;
+
+    case 2:
+      flaskImg.src = "new fold/green stand.png"; // heated stage
+      flaskTooltip.textContent = "Heating: Reaction mixture turning dark red";
+      break;
+
+    case 3:
+      flaskImg.src = "new fold/yellow liqid.png"; // melted stage
+      flaskTooltip.textContent = "Melted mixture: Yellow-red molten liquid";
+      break;
+
+    case 4:
+      flaskImg.src = "new fold/Empty stand.png"; // after acid / cooled
+      flaskTooltip.textContent = "Flask ready for next step";
+      break;
+
+    default:
+      flaskImg.src = "new fold/Empty stand.png";
+      flaskTooltip.textContent = "Heating Mantle with Round Bottom Flask";
+  }
 }
 
 // Highlight clickable flask (backlight pulse)
@@ -783,8 +852,7 @@ function highlightFlaskClick() {
 }
 
 // document.getElementById("flaskImg1").addEventListener("click", handleHeat);
-document.getElementById("flaskImg2").addEventListener("click", handleHeat);
-// document.getElementById("flaskImg3").addEventListener("click", handleHeat);
+document.getElementById("heatingSetup").addEventListener("click", handleHeat);
 function removeFlaskHighlight() {
   const flask = document.getElementById("heatingSetup");
   flask.classList.remove("clickable-highlight");
@@ -801,6 +869,41 @@ function updateConicalFlask(stage) {
 window.speechSynthesis.onvoiceschanged = () => {
   window.speechSynthesis.getVoices();
 };
+function animateDropperMove() {
+  const dropperImg = document.getElementById("dropperImg");
+  const moveImg = document.getElementById("dropperMoveImg");
+
+  dropperImg.classList.add("dropper-img-glow");
+
+  const rect = dropperImg.getBoundingClientRect();
+  const labRect = document.querySelector(".lab-table").getBoundingClientRect();
+
+  const startX = rect.right - labRect.right + 400;
+  const startY = rect.top - labRect.top - 300;
+
+  const endX = startX + 130;
+  const endY = startY;
+
+  moveImg.style.setProperty("--dm-start-x", `${startX}px`);
+  moveImg.style.setProperty("--dm-start-y", `${startY}px`);
+  moveImg.style.setProperty("--dm-end-x", `${endX}px`);
+  moveImg.style.setProperty("--dm-end-y", `${endY}px`);
+
+  // Start animation
+  moveImg.classList.remove("hidden");
+  moveImg.style.animation = "dropperMoveLeft 1.2s ease-out forwards";
+
+  // Remove old listeners to avoid duplication
+  moveImg.onanimationend = null;
+
+  // 🔥 Remove image immediately when animation finishes
+  moveImg.onanimationend = () => {
+    moveImg.classList.add("hidden");
+    moveImg.style.animation = "none";
+  };
+}
 
 // Initial UI update
 updateUI();
+
+// step 10 transition

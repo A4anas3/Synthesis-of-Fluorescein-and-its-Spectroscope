@@ -105,39 +105,7 @@ body {
     border-radius: 0 0 16px 16px;
 }
 
-/* Equipment Styles */
-.equipment {
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
 
-.equipment:hover {
-    transform: translateY(-5px);
-}
-
-.equipment .tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--surface);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid var(--surface-light);
-    z-index: 100;
-}
-
-.equipment:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-    bottom: calc(100% + 10px);
-}
 
 /* Weighing Scale */
 .scale {
@@ -844,21 +812,107 @@ body {
         transform: translate(var(--ax-end), var(--ay-end));
     }
 }
+/* Equipment Styles */
+.equipment {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.equipment:hover {
+    transform: translateY(-5px);
+}
+
+.equipment .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--surface-light);
+    z-index: 100;
+}
+
+.equipment:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 10px);
+}
+
 
 
 /* Adjust Heating Setup Flask Images */
+/* Heating Setup similar to columnChromato-item */
 #heatingSetup {
     position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-#heatingSetup .flask-stage {
-    width: 50vh;  
-    margin: 0px;
-    padding-left:10vh;       /* 🔹 Reduce size */
-    height: auto;
-    margin-top: 25px;    /* 🔹 Moves image a bit downward */
-    transform: translateY(15px); /* Alternative smooth downward shift */
+/* Hover lift (same as columnChromato-item) */
+/* Heating Setup behaves same as columnChromato-item */
+#heatingSetup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 160px;   /* ⭐ Reduce width like column item */
 }
+
+/* Hover lift */
+#heatingSetup:hover {
+    transform: translateY(-5px);
+}
+
+/* Flask image same as column chromatography image */
+#heatingSetup .flask-stage {
+    width: 300px;          /* ⭐ Bigger image (you can increase more) */
+    height: auto;
+    object-fit: contain;
+
+    position: relative;
+    top: 15px;             /* ⭐ Move image lower */
+    left: 0px;           /* ⭐ Move image to the left */
+
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Tooltip same style as .equipment tooltip */
+#heatingSetup .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--surface-light);
+    z-index: 100;
+}
+
+/* Tooltip on hover */
+#heatingSetup:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 10px);
+}
+
+
 
 /* magnetic beed */
 .bead-fly-img {
@@ -920,3 +974,96 @@ body {
 
 
 
+
+
+/* column chromato */
+/* Column Chromatography Item */
+.columnChromato-item {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect (same as .equipment:hover) */
+/* moving transition image */
+.column-transition {
+    position: absolute;
+    width: 60px;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3000;
+    transition: opacity 0.25s linear;
+}
+
+/* movement animation (uses CSS variables set from JS) */
+@keyframes columnMoveAnim {
+    0% {
+        transform: translate(var(--cx-start-x), var(--cx-start-y));
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--cx-end-x), var(--cx-end-y));
+        opacity: 1;
+    }
+}
+
+/* fade for main column image */
+.columnChromato-img {
+    width: 200px;       /* small size */
+    height: 300px;
+    object-fit: contain;
+    /* margin-top: 13px;   ⭐ move image slightly downward */
+    transition: opacity 0.8s ease;
+}
+
+.columnChromato-img.fade-out {
+    opacity: 0;
+}
+
+
+/* gloq */
+/* Heat-like glow for final dropper */
+
+/* 🔥 Clean orange glow ONLY around the image */
+.dropper-img-glow {
+    animation: dropperGlowPulse 1.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(255,110,40,0.9));
+}
+
+@keyframes dropperGlowPulse {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(255,90,30,0.8));
+    }
+    50% {
+        filter: drop-shadow(0 0 18px rgba(255,50,0,1));
+    }
+    100% {
+        filter: drop-shadow(0 0 10px rgba(255,90,30,0.8));
+    }
+}
+
+
+
+/* now move left */
+.dropper-move {
+    position: absolute;
+    width: 120px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Horizontal left movement */
+@keyframes dropperMoveLeft {
+    from {
+        transform: translate(var(--dm-start-x), var(--dm-start-y));
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--dm-end-x), var(--dm-end-y));
+        opacity: 0;
+    }
+}

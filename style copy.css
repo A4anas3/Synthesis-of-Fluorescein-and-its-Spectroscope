@@ -1067,3 +1067,35 @@ body {
         opacity: 0;
     }
 }
+
+
+.columnChromato-item .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--surface-light);
+    z-index: 1000;
+}
+
+.columnChromato-item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: calc(100% + 10px);
+}
+.columnChromato-item {
+    transition: transform 0.3s ease;   /* Smooth animation */
+    transform-origin: center;          /* Scale from center */
+}
+
+.columnChromato-item:hover {
+    transform: scale(1.1);             /* ⭐ Increase size by 1.2x */
+}

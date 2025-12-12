@@ -96,7 +96,9 @@
                 class="extra-img hidden"
               />
 
-              <span class="tooltip small-tooltip">Round Conical Flask</span>
+              <span id="round-flas" class="tooltip small-tooltip"
+                >Round Conical Flask</span
+              >
             </div>
 
             <!-- Heating Setup -->
@@ -130,7 +132,7 @@
                 src="new fold\beaker.png"
                 class="greenYellow-img"
               />
-              <span class="tooltip small-tooltip"
+              <span id="greenyel" class="tooltip small-tooltip"
                 >Green-Yellow Intermediate</span
               >
             </div>
@@ -305,6 +307,7 @@
             <div class="step" data-step="9"><span>9</span></div>
             <div class="step" data-step="10"><span>10</span></div>
             <div class="step" data-step="11"><span>11</span></div>
+            <div class="step" data-step="12"><span>12</span></div>
           </div>
 
           <div class="instruction-card">
@@ -313,6 +316,33 @@
               Click Start to begin the fluorescein synthesis experiment.
             </p>
             <div class="action-hint" id="actionHint"></div>
+          </div>
+          <div id="finalResultCard" class="match-card-style hidden">
+            <div class="result-layout">
+              <!-- LEFT IMAGE -->
+              <img
+                src="new fold\Screenshot 2025-12-13 014204.png"
+                class="result-graph-img"
+                alt="Absorption/Emission Graph"
+              />
+
+              <!-- RIGHT TEXT -->
+              <div class="result-text">
+                <h3>Fluorescein Synthesis Summary</h3>
+
+                <p><strong>Theoretical Yield:</strong> 1.122 g</p>
+                <p><strong>Actual Yield:</strong> 0.70 g</p>
+                <p><strong>Percent Yield:</strong> ~62%</p>
+
+                <p><strong>Absorption Max (λ<sub>max</sub>):</strong> 490 nm</p>
+                <p><strong>Emission Max:</strong> 521 nm</p>
+
+                <p class="small-note">
+                  The obtained absorption and emission values match the
+                  literature for fluorescein in ethanolic solution.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="controls">

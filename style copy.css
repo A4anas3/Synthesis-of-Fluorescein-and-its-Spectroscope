@@ -1099,3 +1099,85 @@ body {
 .columnChromato-item:hover {
     transform: scale(1.1);             /* ⭐ Increase size by 1.2x */
 }
+
+@keyframes dropperMoveMiddle {
+    from {
+        transform: translate(var(--dm-start-x), var(--dm-start-y));
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--dm-mid-x), var(--dm-mid-y));
+        opacity: 1;
+    }
+}
+@keyframes dropperMoveReturn {
+    from {
+        transform: translate(var(--dm-mid-x), var(--dm-mid-y));
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--dm-end-x), var(--dm-end-y));
+        opacity: 0;
+    }
+}
+.scale-glow {
+  animation: scaleGlowPulse 0.8s infinite alternate ease-in-out;
+  box-shadow: 0 0 40px 15px #ffea00;
+}
+
+@keyframes scaleGlowPulse {
+  from {
+    box-shadow: 0 0 18px 8px #ffdd00;
+  }
+  to {
+    box-shadow: 0 0 45px 18px #fff700;
+  }
+}
+
+
+/* Unified Card Style — same as top experiment complete card */
+.match-card-style {
+  background: rgba(54, 83, 102, 0.85);   /* Same teal-grey tone */
+  border-radius: 16px;
+  padding: 18px 25px;
+  margin-top: 15px;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+/* Two-column layout inside card */
+.match-card-style .result-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Left image */
+.match-card-style .result-graph-img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  border: 2px solid #fff3b0;
+  box-shadow: 0 0 12px rgba(255,255,200,0.5);
+}
+
+/* Title */
+.match-card-style h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #ffe685;
+}
+
+/* Bold white labels */
+.match-card-style p strong {
+  color: #ffffff;
+}
+
+/* Notes */
+.match-card-style .small-note {
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+

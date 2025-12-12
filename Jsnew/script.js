@@ -48,10 +48,10 @@ const STEPS = [
     id: 5,
     title: "Step 5: Heat & Stir",
     instruction:
-      "Turn on the heating mantle and magnetic stirrer. Heat the mixture for 5-10 minutes until it melts and becomes dark red.",
+      "Turn on the heating mantle and magnetic stirrer. Heat the mixture for 5-10 minutes until it melts and becomes dark red viscous liquid .",
     action: "heat",
     voice:
-      "Step 5: Heat the mixture with stirring for 5 to 10 minutes until it becomes dark red.",
+      "Step 5: Heat the mixture with stirring for 5 to 10 minutes until it becomes dark red viscous liquid .",
   },
   {
     id: 6,
@@ -98,12 +98,20 @@ const STEPS = [
 
   {
     id: 11,
+    title: "Step 11: Weigh Final Product",
+    instruction: "Click on the weighing scale to weigh purified fluorescein.",
+    action: "finalWeigh",
+    voice: "Step 11: Weigh the purified fluorescein to determine yield.",
+  },
+
+  // ⭐⭐⭐ FINAL STEP 12 — COMPLETE ⭐⭐⭐
+  {
+    id: 12,
     title: "Experiment Complete!",
     instruction:
-      "Congratulations! You have successfully synthesized fluorescein. This compound is used in medical diagnostics and as a tracer dye.",
+      "Congratulations! You have successfully synthesized fluorescein.",
     action: null,
-    voice:
-      "Congratulations  You have successfully synthesized fluorescein. This compound is used in medical diagnostics and as a tracer dye.",
+    voice: "Congratulations! You have successfully synthesized fluorescein.",
   },
 ];
 
@@ -147,6 +155,7 @@ const chemicals = {
   ammonia: document.getElementById("ammonia"),
   waterPour: document.getElementById("waterPour"),
   columnChromo: document.getElementById("columnChromo"),
+  finalWeigh: document.getElementById("scale"),
 };
 
 // Flask state
@@ -256,9 +265,17 @@ function updateUI() {
   }
 
   if (currentStep === 11) {
-    animateDropperMove();
+    actionHint.textContent =
+      "👆 Click the digital scale to weigh the final product";
+    actionHint.classList.add("visible");
+
+    // ⭐ Add glow to scale
+    document.getElementById("scale").classList.add("scale-glow");
+  }
+  if (currentStep === 12) {
+    document.getElementById("finalResultCard").classList.remove("hidden");
   } else {
-    dropperImg.classList.remove("dropper-img-glow");
+    document.getElementById("finalResultCard").classList.add("hidden");
   }
 
   // Speak the instruction
@@ -316,7 +333,7 @@ function handleChemicalClick(chemicalId) {
           magBeadObj.style.animation = "none";
           magBeadObj.style.transform = "none";
 
-          showFlaskImage(3);
+          showFlaskImage(1);
           addObservation("Magnetic bead added to flask");
 
           canProceed = true;
@@ -362,9 +379,13 @@ function handleChemicalClick(chemicalId) {
               doseImg.style.animation = "none"; // reset animation state
               doseImg.style.transform = "none"; // reset position
               updateConicalFlask(2);
+              document.getElementById("round-flas").textContent =
+                "Round Conical Flask contain 0.5g Phthalic Anhydride";
 
               // updateFlask('#f5f5dc', 15);
-              addObservation("0.5g Phthalic Anhydride weighed and added");
+              addObservation(
+                "0.5g Phthalic Anhydride weighed and added to Conical Flask "
+              );
 
               canProceed = true;
               nextBtn.disabled = false;
@@ -411,9 +432,13 @@ function handleChemicalClick(chemicalId) {
               resImg.style.animation = "none";
               resImg.style.transform = "none";
               updateConicalFlask(3);
+              document.getElementById("round-flas").textContent =
+                "Round Conical Flask contain Mixture of 0.5g Phthalic Anhydride and  0.75g Resorcinol";
 
               // updateFlask('#ffe4d4', 30);
-              addObservation("0.75g Resorcinol weighed and added");
+              addObservation(
+                "0.75g Resorcinol weighed and added to Conical Flask "
+              );
 
               canProceed = true;
               nextBtn.disabled = false;
@@ -465,6 +490,8 @@ function handleChemicalClick(chemicalId) {
           acidObj2.style.setProperty("--x2-end", `${endX2}px`);
           acidObj2.style.setProperty("--y2-end", `${endY2}px`);
           updateConicalFlask(4);
+          document.getElementById("round-flas").textContent =
+            "Round Conical Flask contain Mixture of 0.5g Phthalic Anhydride and  0.75g Resorcinol and H₂SO₄";
 
           acidObj2.style.opacity = "1";
           acidObj2.style.animation = "acidRight 1.5s ease forwards";
@@ -473,8 +500,9 @@ function handleChemicalClick(chemicalId) {
             acidObj2.style.opacity = "0";
             acidObj2.style.animation = "none";
             acidObj2.style.transform = "none";
+            showFlaskImage(3);
 
-            addObservation("Conc. H₂SO₄ added (movable drop)");
+            addObservation("Conc. H₂SO₄ added to Conical Flask");
 
             canProceed = true;
             nextBtn.disabled = false;
@@ -514,7 +542,8 @@ function handleChemicalClick(chemicalId) {
           waterObj.style.animation = "none";
           waterObj.style.transform = "none";
           document.getElementById("brownImg").src = "new fold/redgreen.png";
-          document.getElementById("brownLabel").textContent = "Red Liquid";
+          document.getElementById("brownLabel").textContent =
+            "Little Fluorescein Green color";
           document.getElementById("brownImg").classList.add("glow-green");
 
           // 🔴 removed updateFlask(...)
@@ -556,7 +585,8 @@ function handleChemicalClick(chemicalId) {
           ammObj.style.animation = "none";
           ammObj.style.transform = "none";
           document.getElementById("brownImg").src = "new fold/brown beaker.png";
-          document.getElementById("brownLabel").textContent = "Green Liquid";
+          document.getElementById("brownLabel").textContent =
+            "Brown fluorescent form";
           document.getElementById("brownImg").classList.remove("glow-green");
 
           addObservation("Ammonia added - solution becoming basic");
@@ -617,8 +647,8 @@ function handleChemicalClick(chemicalId) {
 
             document.getElementById("greenYellowImg").src =
               "new fold/fluroshine.png";
-            document.getElementById("brownLabel").textContent =
-              "Yellow-Green Liquid";
+            document.getElementById("greenyel").textContent =
+              "Yellow-Green Fluorescein";
 
             addObservation("Dilution formed yellow-green fluorescein");
 
@@ -680,6 +710,20 @@ function handleChemicalClick(chemicalId) {
         }, 1200);
 
         break;
+      case "finalWeigh":
+        // Remove glow when clicked
+        document.getElementById("scale").classList.remove("scale-glow");
+
+        // Start dropper → scale animation
+        animateDropperMove();
+
+        // Add observation
+        addObservation("Final purified fluorescein weighed: 0.70 g");
+
+        canProceed = true;
+        nextBtn.disabled = false;
+        nextBtn.classList.add("glow-next");
+        break;
     }
   }, 500);
 }
@@ -721,17 +765,20 @@ function handleHeat() {
   heatObj.style.setProperty("--hx-end", `${hxEnd}px`);
   heatObj.style.setProperty("--hy-end", `${hyEnd}px`);
   removeFlaskHighlight();
-  showFlaskImage(2);
+
   heatObj.style.opacity = "1";
 
   heatObj.style.animation = "heatMoveRight 1.8s ease-out forwards";
+  showFlaskImage(2);
 
   setTimeout(() => {
     heatObj.style.opacity = "0";
     heatObj.style.animation = "none";
     heatObj.style.transform = "none";
 
-    addObservation("Mixture heated — motion observed");
+    addObservation(
+      "The mixture is refluxed at 1800C till a viscous liquid appears"
+    );
 
     canProceed = true;
     nextBtn.disabled = false;
@@ -818,7 +865,8 @@ function showFlaskImage(stage) {
   switch (stage) {
     case 1:
       flaskImg.src = "new fold/Empty stand.png";
-      flaskTooltip.textContent = "Empty Flask on Heating Mantle";
+      flaskTooltip.textContent =
+        "Empty Flask with Heating Mantle and Magetic Beed";
       break;
 
     case 2:
@@ -878,28 +926,42 @@ function animateDropperMove() {
   const rect = dropperImg.getBoundingClientRect();
   const labRect = document.querySelector(".lab-table").getBoundingClientRect();
 
+  // Start position (right)
   const startX = rect.right - labRect.right + 400;
   const startY = rect.top - labRect.top - 300;
 
+  // Middle position (digital scale)
+  const midX = startX - 850;
+  const midY = startY - 50;
+
+  // End position (right return)
   const endX = startX + 130;
   const endY = startY;
 
+  // Push CSS variables
   moveImg.style.setProperty("--dm-start-x", `${startX}px`);
   moveImg.style.setProperty("--dm-start-y", `${startY}px`);
+  moveImg.style.setProperty("--dm-mid-x", `${midX}px`);
+  moveImg.style.setProperty("--dm-mid-y", `${midY}px`);
   moveImg.style.setProperty("--dm-end-x", `${endX}px`);
   moveImg.style.setProperty("--dm-end-y", `${endY}px`);
 
-  // Start animation
+  // ⭐ Stage 1 → Move right → middle (scale)
   moveImg.classList.remove("hidden");
-  moveImg.style.animation = "dropperMoveLeft 1.2s ease-out forwards";
+  moveImg.style.animation = "dropperMoveMiddle 2s ease-out forwards";
 
-  // Remove old listeners to avoid duplication
-  moveImg.onanimationend = null;
-
-  // 🔥 Remove image immediately when animation finishes
   moveImg.onanimationend = () => {
-    moveImg.classList.add("hidden");
-    moveImg.style.animation = "none";
+    animateWeight(0.7);
+
+    // ⭐ Wait for weight animation to finish before returning
+    setTimeout(() => {
+      moveImg.style.animation = "dropperMoveReturn 4s ease-out forwards";
+
+      moveImg.onanimationend = () => {
+        moveImg.classList.add("hidden");
+        moveImg.style.animation = "none";
+      };
+    }, 2000); // Adjust depending on speed of weight animation
   };
 }
 
